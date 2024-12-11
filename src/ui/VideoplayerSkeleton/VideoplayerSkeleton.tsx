@@ -1,0 +1,30 @@
+import { Box } from "@mui/material";
+import LoadingIcon from "../LoadingIcon/LoadingIcon";
+
+interface Props {
+  isLoading: boolean;
+}
+
+const VideoplayerSkeleton = ({ isLoading }: Props) => {
+  return (
+    <Box
+      className="videooplayerSkeleton"
+      sx={{
+        background: "#272727",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {isLoading ? (
+        <LoadingIcon />
+      ) : (
+        <Box component="span" sx={{ fontSize: "20px" }}>
+          Фильм не найден :(
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+export default VideoplayerSkeleton;

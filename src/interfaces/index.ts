@@ -36,3 +36,19 @@ export interface IFilters {
   type: string | undefined;
   page: string;
 }
+
+export interface IFilmById {
+  name: string;
+  rating: { kp: number; imdb: number };
+  poster: { url: string };
+  year: number;
+  countries: { name: string }[];
+  genres: { name: string }[];
+  persons: { name: string }[];
+  seriesLength?: string;
+  movieLength?: string;
+  shortDescription: string;
+  description: string;
+  similarMovies: IPopularFilm[];
+  sequelsAndPrequels: IPopularFilm[];
+}
