@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router";
 
 import AppLayout from "../layouts/AppLayout";
 import Home from "../pages/Home/Home";
-import Film from "../pages/Film/Film";
 import Category from "../pages/Category/Category";
 import NotFound from "../pages/NotFound/NotFound";
+import Film from "../pages/Film/Film";
 
 const categories = [
   "serials",
@@ -30,7 +30,7 @@ const categories = [
   "fantastic",
 ];
 
-const paths = ["/", ...categories, "/film/:filmId"];
+const paths = ["/", ...categories, "/movie/:filmId"];
 
 const routes = paths.map((cat) => {
   return {
@@ -38,7 +38,7 @@ const routes = paths.map((cat) => {
     element:
       cat === "/" ? (
         <Home />
-      ) : cat === "/film/:filmId" ? (
+      ) : cat === "/movie/:filmId" ? (
         <Film />
       ) : (
         <Category />

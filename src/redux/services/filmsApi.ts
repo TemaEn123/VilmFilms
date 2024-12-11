@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { IFilters, IResponseFromFilmsApi } from "../../interfaces";
+import { IFilmById, IFilters, IResponseFromFilmsApi } from "../../interfaces";
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -52,7 +52,7 @@ export const filmsApi = createApi({
         },
       }),
     }),
-    getFilmById: builder.query<any, string>({
+    getFilmById: builder.query<IFilmById, string>({
       query: (id) => ({
         url: `movie/${id}`,
         headers: {

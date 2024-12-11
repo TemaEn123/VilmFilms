@@ -1,5 +1,3 @@
-import { Link } from "react-router";
-
 import { Box, Link as MUILink, Typography } from "@mui/material";
 
 import { IFilmInCatalog, IPopularFilm } from "../../interfaces";
@@ -21,8 +19,7 @@ const FilmCard = ({ film, popular }: Props) => {
         sx={{ padding: { sm: "10px", xs: "5px" }, backgroundColor: "#1d1d1c" }}
       >
         <MUILink
-          to={`film/${film.id}`}
-          component={Link}
+          href={`/movie/${film.id}`}
           sx={{
             marginBottom: "10px",
             display: "block",
@@ -34,8 +31,7 @@ const FilmCard = ({ film, popular }: Props) => {
           <img className="poster" src={film.poster.url} alt="постер" />
         </MUILink>
         <MUILink
-          to={`film/${film.id}`}
-          component={Link}
+          href={`/movie/${film.id}`}
           sx={{
             textDecoration: "none",
             display: "block",
