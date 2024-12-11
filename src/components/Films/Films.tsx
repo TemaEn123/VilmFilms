@@ -54,11 +54,7 @@ const Films = () => {
       films?.docs.length ? (
         <ShowMoreButton handleShowMoreClick={handleShowMoreClick} />
       ) : null}
-      {films?.pages !== Number(filters.page) &&
-      isFetching &&
-      films?.docs.length ? (
-        <LoadingIcon />
-      ) : null}
+      {isFetching && films?.docs.length ? <LoadingIcon /> : null}
     </Box>
   );
 };
