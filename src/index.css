@@ -91,6 +91,10 @@ main {
   }
 }
 
+body.lock {
+  overflow: hidden;
+}
+
 .poster {
   position: absolute;
   left: 0;

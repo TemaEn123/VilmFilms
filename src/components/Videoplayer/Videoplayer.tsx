@@ -6,8 +6,6 @@ const Videoplayer = () => {
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log(error);
-
   useEffect(() => {
     const dataUrl = window.location.href;
     setIsLoading(true);

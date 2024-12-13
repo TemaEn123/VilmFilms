@@ -61,6 +61,15 @@ export const filmsApi = createApi({
         },
       }),
     }),
+    getFilmsBySearch: builder.query<IResponseFromFilmsApi, string>({
+      query: (title) => ({
+        url: `movie/search?page=1&limit=10&query=${title}`,
+        headers: {
+          accept: "application/json",
+          "X-API-KEY": API_KEY,
+        },
+      }),
+    }),
   }),
 });
 
@@ -68,4 +77,5 @@ export const {
   useGetFilmsQuery,
   useGetPopularFilmsQuery,
   useGetFilmByIdQuery,
+  useGetFilmsBySearchQuery,
 } = filmsApi;
