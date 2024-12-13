@@ -9,6 +9,8 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [openSearch, setOpenSearch] = useState<boolean>(false);
 
+  const body = document.querySelector("body");
+
   const handleTextInput = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -17,9 +19,10 @@ const Header = () => {
 
   const handleSearchClick = () => {
     setOpenSearch((prev) => !prev);
+    body!.classList.remove("lock");
 
     if (!openSearch) {
-      setSearchValue("");
+      body!.classList.add("lock");
     }
   };
 
@@ -27,6 +30,7 @@ const Header = () => {
     const onResize = () => {
       if (window.innerWidth >= 600 && openSearch) {
         setOpenSearch(false);
+        body!.classList.remove("lock");
       }
     };
 
