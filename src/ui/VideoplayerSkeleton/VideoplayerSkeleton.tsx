@@ -17,7 +17,7 @@ const VideoplayerSkeleton = ({ isLoading }: Props) => {
       }}
     >
       {isLoading ? (
-        <LoadingIcon />
+        <LoadingIcon m="0px" />
       ) : (
         <Box component="span" sx={{ fontSize: "20px" }}>
           Фильм не найден :(

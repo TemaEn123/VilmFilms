@@ -54,7 +54,7 @@ const Films = () => {
       films?.docs.length ? (
         <ShowMoreButton handleShowMoreClick={handleShowMoreClick} />
       ) : null}
-      {isFetching && films?.docs.length ? <LoadingIcon /> : null}
+      {isFetching && films?.docs.length ? <LoadingIcon m="30px 0 0 0" /> : null}
     </Box>
   );
 };
