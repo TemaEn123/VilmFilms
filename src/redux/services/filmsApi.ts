@@ -61,14 +61,68 @@ export const filmsApi = createApi({
         },
       }),
     }),
-    getFilmsBySearch: builder.query<IResponseFromFilmsApi, string>({
-      query: (title) => ({
-        url: `movie/search?page=1&limit=10&query=${title}`,
+    getFilmsBySearch: builder.query<IResponseFromFilmsApi, [string, string]>({
+      query: (data) => ({
+        url: `movie/search?page=${data[1]}&limit=10&query=${data[0]}`,
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
         },
       }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (Number(otherArgs.arg[1]) > 1) {
+          currentCache.limit = newItems.limit;
+          currentCache.page = newItems.page;
+          currentCache.pages = newItems.pages;
+          currentCache.total = newItems.total;
+          currentCache.docs.push(...newItems.docs);
+        } else {
+          currentCache.limit = newItems.limit;
+          currentCache.page = newItems.page;
+          currentCache.pages = newItems.pages;
+          currentCache.total = newItems.total;
+          currentCache.docs = newItems.docs;
+        }
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+    }),
+    getFilmsByLinkClick: builder.query<
+      IResponseFromFilmsApi,
+      [string, string, string]
+    >({
+      query: (data) => ({
+        url: `movie?page=${data[2]}&limit=10&selectFields=id&selectFields=name&selectFields=year&selectFields=votes&selectFields=poster&selectFields=rating&notNullFields=name&votes.kp=3000-6666666&${data[0]}=${data[1]}`,
+        headers: {
+          accept: "application/json",
+          "X-API-KEY": API_KEY,
+        },
+      }),
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (Number(otherArgs.arg[2]) > 1) {
+          currentCache.limit = newItems.limit;
+          currentCache.page = newItems.page;
+          currentCache.pages = newItems.pages;
+          currentCache.total = newItems.total;
+          currentCache.docs.push(...newItems.docs);
+        } else {
+          currentCache.limit = newItems.limit;
+          currentCache.page = newItems.page;
+          currentCache.pages = newItems.pages;
+          currentCache.total = newItems.total;
+          currentCache.docs = newItems.docs;
+        }
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
   }),
 });
@@ -78,4 +132,5 @@ export const {
   useGetPopularFilmsQuery,
   useGetFilmByIdQuery,
   useGetFilmsBySearchQuery,
+  useGetFilmsByLinkClickQuery,
 } = filmsApi;

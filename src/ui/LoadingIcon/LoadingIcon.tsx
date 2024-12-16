@@ -12,7 +12,7 @@ const LoadingIcon = ({ m }: Props) => {
         display: "flex",
         justifyContent: "center",
         width: "100%",
-        marginTop: m,
+        margin: m,
       }}
     >
       <SvgIcon className="loading" sx={{ fontSize: "30px" }}>

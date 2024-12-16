@@ -1,4 +1,5 @@
 import { Box, Link as MUILink, Typography } from "@mui/material";
+
 import { IFilmInCatalog } from "../../interfaces";
 
 interface Props {

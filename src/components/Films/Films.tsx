@@ -1,6 +1,4 @@
-import { useGetFilmsQuery } from "../../redux/services/filmsApi";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
 import { changeFilters } from "../../redux/slices/filtersSlice";
 
 import ShowMoreButton from "../../ui/ShowMoreButton/ShowMoreButton";
@@ -9,14 +7,23 @@ import FilmCard from "../../ui/FilmCard/FilmCard";
 import { Box } from "@mui/material";
 import FilmCardSkeleton from "../../ui/FilmCardSkeleton/FilmCardSkeleton";
 
-import { IFilmInCatalog } from "../../interfaces";
+import {
+  IFilmInCatalog,
+  IFilters,
+  IResponseFromFilmsApi,
+} from "../../interfaces";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
-const Films = () => {
+interface Props {
+  filters: IFilters;
+  films: IResponseFromFilmsApi | undefined;
+  error: FetchBaseQueryError | SerializedError | undefined;
+  isFetching: boolean;
+}
+
+const Films = ({ filters, films, error, isFetching }: Props) => {
   const dispatch = useDispatch();
-
-  const filters = useSelector((state: RootState) => state.filters.filters);
-
-  const { data: films, error, isFetching } = useGetFilmsQuery(filters);
 
   const handleShowMoreClick = () => {
     dispatch(changeFilters(["page", (Number(filters.page) + 1).toString()]));
@@ -33,7 +40,7 @@ const Films = () => {
     >
       {isFetching && Number(filters.page) < 2 ? (
         <FilmCardSkeleton count={16} popular={false} />
-      ) : (films?.docs as []).length < 1 ? (
+      ) : (films?.docs as [])?.length < 1 ? (
         <Box
           sx={{
             width: "100%",
@@ -46,7 +53,9 @@ const Films = () => {
         </Box>
       ) : (
         films?.docs.map((film: IFilmInCatalog) => {
-          return <FilmCard popular={false} film={film} key={film.id} />;
+          if (film.poster && film.poster.url && film.name) {
+            return <FilmCard popular={false} film={film} key={film.id} />;
+          }
         })
       )}
       {films?.pages !== Number(filters.page) &&

@@ -1,4 +1,6 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
+import { createSearchParams, useLocation, useNavigate } from "react-router";
 
 import { useGetFilmsBySearchQuery } from "../../redux/services/filmsApi";
 
@@ -30,7 +32,10 @@ const Search = ({
 
   const debouncedSearch = useDebounce(searchValue);
 
-  const skip: boolean = debouncedSearch.length < 1;
+  const location = useLocation();
+
+  const skip: boolean =
+    debouncedSearch.length < 1 || location.pathname === "/search";
 
   useEffect(() => {
     if (debouncedSearch.length < 1) {
@@ -60,13 +65,26 @@ const Search = ({
     data: films,
     error,
     isFetching,
-  } = useGetFilmsBySearchQuery(debouncedSearch, {
+  } = useGetFilmsBySearchQuery([debouncedSearch, "1"], {
     skip,
   });
 
   const filterFilms = films?.docs.filter(
     (film) => film.poster && film.poster.url && film.name
   );
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setShowSearchList(false);
+    navigate({
+      pathname: "/search",
+      search: createSearchParams({
+        title: searchValue,
+      }).toString(),
+    });
+  };
 
   if (error) {
     console.error(error);
@@ -75,6 +93,7 @@ const Search = ({
   return (
     <>
       <Box
+        onSubmit={(e) => handleSubmit(e)}
         component="form"
         className="search"
         sx={
@@ -115,6 +134,7 @@ const Search = ({
           placeholder="Поиск..."
         />
         <Button
+          type="submit"
           variant="contained"
           sx={{
             background: "#222",
@@ -125,7 +145,7 @@ const Search = ({
         >
           Поиск
         </Button>
-        {showSearchList && (
+        {showSearchList && location.pathname !== "/search" && (
           <Box
             sx={{
               position: "absolute",
@@ -143,9 +163,9 @@ const Search = ({
             {isFetching ? (
               <LoadingIcon m="0px" />
             ) : (filterFilms as [])?.length ? (
-              filterFilms!.map((film) => (
-                <SearchFilm film={film} key={film.id} />
-              ))
+              filterFilms
+                ?.slice(0, 9)!
+                .map((film) => <SearchFilm film={film} key={film.id} />)
             ) : (
               <Typography component="span" sx={{ fontSize: "14px" }}>
                 Не найдено
