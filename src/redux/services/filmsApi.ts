@@ -14,7 +14,6 @@ export const filmsApi = createApi({
   reducerPath: "filmsApi",
   keepUnusedDataFor: 100000,
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  mode: "no-cors",
   endpoints: (builder) => ({
     getFilms: builder.query<IResponseFromFilmsApi, IFilters>({
       query: (filters) => ({
@@ -22,6 +21,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
         params: {
           ...filters,
@@ -55,6 +55,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
       }),
     }),
@@ -64,6 +65,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
       }),
     }),
@@ -73,6 +75,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
       }),
       serializeQueryArgs: ({ endpointName }) => {
@@ -106,6 +109,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
       }),
       serializeQueryArgs: ({ endpointName }) => {
@@ -136,6 +140,7 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
+          mode: "no-cors",
         },
       }),
     }),
