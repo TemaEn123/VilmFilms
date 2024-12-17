@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/api(.*)",
+      "source": "https://api.kinopoisk.dev/v1.4/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
