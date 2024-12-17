@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Box } from "@mui/material";
 import LoadingIcon from "../LoadingIcon/LoadingIcon";
 
@@ -5,7 +7,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const VideoplayerSkeleton = ({ isLoading }: Props) => {
+const VideoplayerSkeleton = memo(({ isLoading }: Props) => {
   return (
     <Box
       className="videooplayerSkeleton"
@@ -25,6 +27,6 @@ const VideoplayerSkeleton = ({ isLoading }: Props) => {
       )}
     </Box>
   );
-};
+});
 
 export default VideoplayerSkeleton;

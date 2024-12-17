@@ -20,7 +20,7 @@ const Film = () => {
   } = useGetFilmByIdQuery(params.filmId as string);
 
   if (error) {
-    return <>404</>;
+    throw new Error("404");
   }
 
   return (

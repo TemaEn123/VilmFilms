@@ -1,12 +1,13 @@
 import { Box, Link as MUILink, Typography } from "@mui/material";
 
 import { IFilmInCatalog } from "../../interfaces";
+import { memo } from "react";
 
 interface Props {
   film: IFilmInCatalog;
 }
 
-const SearchFilm = ({ film }: Props) => {
+const SearchFilm = memo(({ film }: Props) => {
   return (
     <Box>
       <MUILink
@@ -65,6 +66,6 @@ const SearchFilm = ({ film }: Props) => {
       </MUILink>
     </Box>
   );
-};
+});
 
 export default SearchFilm;

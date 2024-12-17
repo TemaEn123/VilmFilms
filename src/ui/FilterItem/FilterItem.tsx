@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -18,7 +18,7 @@ interface Props {
   item: IDataForFiltersItem;
 }
 
-const FilterItem = ({ item }: Props) => {
+const FilterItem = memo(({ item }: Props) => {
   const filters = useSelector((state: RootState) => state.filters.filters);
 
   const [name, setName] = useState<string | undefined>(
@@ -29,17 +29,20 @@ const FilterItem = ({ item }: Props) => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setName(event.target.value as string);
-    if (Number(filters.page) > 1) {
-      dispatch(changeFilters(["page", "1"]));
-    }
-    if (event.target.value === "") {
-      dispatch(changeFilters([item.slugName, undefined]));
-    } else {
-      dispatch(changeFilters([item.slugName, event.target.value]));
-    }
-  };
+  const handleChange = useCallback(
+    (event: SelectChangeEvent) => {
+      setName(event.target.value as string);
+      if (Number(filters.page) > 1) {
+        dispatch(changeFilters(["page", "1"]));
+      }
+      if (event.target.value === "") {
+        dispatch(changeFilters([item.slugName, undefined]));
+      } else {
+        dispatch(changeFilters([item.slugName, event.target.value]));
+      }
+    },
+    [dispatch, filters.page, item.slugName]
+  );
 
   return (
     <FormControl
@@ -73,6 +76,6 @@ const FilterItem = ({ item }: Props) => {
       </Select>
     </FormControl>
   );
-};
+});
 
 export default FilterItem;

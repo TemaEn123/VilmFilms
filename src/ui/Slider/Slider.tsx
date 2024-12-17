@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -29,7 +31,7 @@ interface Props {
   name?: string;
 }
 
-const Slider = ({ films, name }: Props) => {
+const Slider = memo(({ films, name }: Props) => {
   return (
     <Box
       component="section"
@@ -53,6 +55,6 @@ const Slider = ({ films, name }: Props) => {
       </Carousel>
     </Box>
   );
-};
+});
 
 export default Slider;

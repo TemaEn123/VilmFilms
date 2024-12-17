@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { IFilmById, IFilters, IResponseFromFilmsApi } from "../../interfaces";
+import {
+  IActor,
+  IFilmById,
+  IFilters,
+  IResponseFromFilmsApi,
+} from "../../interfaces";
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -124,6 +129,15 @@ export const filmsApi = createApi({
         return currentArg !== previousArg;
       },
     }),
+    getActor: builder.query<IActor, string>({
+      query: (id) => ({
+        url: `https://api.kinopoisk.dev/v1.4/person/${id}`,
+        headers: {
+          accept: "application/json",
+          "X-API-KEY": API_KEY,
+        },
+      }),
+    }),
   }),
 });
 
@@ -133,4 +147,5 @@ export const {
   useGetFilmByIdQuery,
   useGetFilmsBySearchQuery,
   useGetFilmsByLinkClickQuery,
+  useGetActorQuery,
 } = filmsApi;

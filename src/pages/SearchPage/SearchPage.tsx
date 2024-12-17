@@ -1,9 +1,6 @@
-import { useRef } from "react";
-
-import { useLocation } from "react-router";
-
 import { useSelector } from "react-redux";
 import {
+  useGetActorQuery,
   useGetFilmsByLinkClickQuery,
   useGetFilmsBySearchQuery,
 } from "../../redux/services/filmsApi";
@@ -16,32 +13,24 @@ import { Box } from "@mui/material";
 
 import { queryBySearchAndClick } from "../../data";
 
+import useWasPageChange from "../../helpers/hooks/useWasPageChange";
+
 const SearchPage = () => {
-  const location = useLocation();
-
-  const pathRef = useRef<{ pathname: string; search: string }>({
-    pathname: "",
-    search: "name",
-  });
-
-  const isFirstPageRef = useRef<boolean>(false);
-
-  if (
-    location.pathname !== pathRef.current.pathname ||
-    location.search !== pathRef.current.search
-  ) {
-    isFirstPageRef.current = true;
-    pathRef.current.pathname = location.pathname;
-    pathRef.current.search = location.search;
-  } else {
-    isFirstPageRef.current = false;
-  }
+  const isFirstPageRef = useWasPageChange();
 
   const parsed = queryString.parse(location.search);
 
   const filters = useSelector((state: RootState) => state.filters.filters);
 
   const skip: boolean = Object.keys(parsed)[0] === "title";
+
+  const {
+    data: actor,
+    error: errorActor,
+    isFetching: isFetchingActor,
+  } = useGetActorQuery(parsed["persons.id"] as string, {
+    skip: Object.keys(parsed)[0] !== "persons.id",
+  });
 
   const {
     data: filmsBySearch,
@@ -80,7 +69,8 @@ const SearchPage = () => {
       {!queryBySearchAndClick.includes(Object.keys(parsed)[0]) ||
       parsed[Object.keys(parsed)[0]]!.length < 1 ||
       errorByClick ||
-      errorBySearch ? (
+      errorBySearch ||
+      errorActor ? (
         <Box
           sx={{
             width: "100%",
@@ -92,12 +82,26 @@ const SearchPage = () => {
           Некорректный запрос
         </Box>
       ) : (
-        <Films
-          filters={filters}
-          films={skip ? filmsBySearch : filmsByClick}
-          error={skip ? errorBySearch : errorByClick}
-          isFetching={skip ? isFetchingBySearch : isFetchingByClick}
-        />
+        <>
+          {!isFetchingBySearch && !isFetchingByClick && !isFetchingActor && (
+            <Box
+              sx={{
+                fontSize: { xs: "20px", md: "25px" },
+                marginBottom: { xs: "20px", md: "25px" },
+              }}
+            >
+              {Object.keys(parsed)[0] === "persons.id"
+                ? actor?.name
+                : parsed[Object.keys(parsed)[0]]}
+            </Box>
+          )}
+          <Films
+            filters={filters}
+            films={skip ? filmsBySearch : filmsByClick}
+            error={skip ? errorBySearch : errorByClick}
+            isFetching={skip ? isFetchingBySearch : isFetchingByClick}
+          />
+        </>
       )}
     </>
   );

@@ -1,4 +1,7 @@
+import { memo } from "react";
+
 import { Link } from "react-router";
+
 import { Box, Typography, Link as MUILink } from "@mui/material";
 import FilmDetailsLinks from "../../ui/FilmDetailsLinks/FilmDetailsLinks";
 
@@ -8,7 +11,7 @@ interface Props {
   film: IFilmById;
 }
 
-const FilmDetails = ({ film }: Props) => {
+const FilmDetails = memo(({ film }: Props) => {
   return (
     <Box sx={{ marginLeft: { xs: "0px", lg: "10px" }, flex: "1 1 auto" }}>
       <Box sx={{ backgroundColor: "#222" }} className="filmDetailsItem">
@@ -111,6 +114,6 @@ const FilmDetails = ({ film }: Props) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FilmDetails;

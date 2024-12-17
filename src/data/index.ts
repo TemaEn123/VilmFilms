@@ -405,7 +405,7 @@ export const dataForFilters: IDataForFiltersItem[] = [
   },
 ];
 
-export const queryBySearchAndClick = [
+export const queryBySearchAndClick: string[] = [
   "title",
   "year",
   "countries.name",

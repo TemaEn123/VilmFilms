@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 
@@ -14,7 +14,18 @@ const NotFound = () => {
         }}
       >
         <Header />
-        <main>Page Not Found</main>
+        <main>
+          <Box
+            sx={{
+              width: "100%",
+              fontSize: "50px",
+              textAlign: "center",
+              marginTop: "50px",
+            }}
+          >
+            404
+          </Box>
+        </main>
         <Footer />
       </Container>
     </>
