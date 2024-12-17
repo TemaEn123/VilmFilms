@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import { Link } from "react-router";
 
@@ -11,20 +11,21 @@ const Header = () => {
 
   const body = document.querySelector("body");
 
-  const handleTextInput = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setSearchValue(e.target.value);
-  };
+  const handleTextInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setSearchValue(e.target.value);
+    },
+    []
+  );
 
-  const handleSearchClick = () => {
+  const handleSearchClick = useCallback(() => {
     setOpenSearch((prev) => !prev);
     body!.classList.remove("lock");
 
     if (!openSearch) {
       body!.classList.add("lock");
     }
-  };
+  }, [body, openSearch]);
 
   useEffect(() => {
     const onResize = () => {
@@ -39,7 +40,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, [openSearch]);
+  }, [openSearch, body]);
 
   return (
     <Box

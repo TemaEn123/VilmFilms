@@ -1,10 +1,11 @@
 import { Box, Button } from "@mui/material";
+import { memo } from "react";
 
 interface Props {
   handleShowMoreClick: () => void;
 }
 
-const ShowMoreButton = ({ handleShowMoreClick }: Props) => {
+const ShowMoreButton = memo(({ handleShowMoreClick }: Props) => {
   return (
     <Box
       sx={{
@@ -23,6 +24,6 @@ const ShowMoreButton = ({ handleShowMoreClick }: Props) => {
       </Button>
     </Box>
   );
-};
+});
 
 export default ShowMoreButton;

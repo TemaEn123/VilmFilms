@@ -1,7 +1,6 @@
 import { useGetPopularFilmsQuery } from "../../redux/services/filmsApi";
 
 import { Box } from "@mui/material";
-
 import Slider from "../../ui/Slider/Slider";
 import FilmCardSkeleton from "../../ui/FilmCardSkeleton/FilmCardSkeleton";
 

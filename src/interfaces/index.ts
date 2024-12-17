@@ -52,3 +52,7 @@ export interface IFilmById {
   similarMovies: IPopularFilm[];
   sequelsAndPrequels: IPopularFilm[];
 }
+
+export interface IActor {
+  name: string;
+}

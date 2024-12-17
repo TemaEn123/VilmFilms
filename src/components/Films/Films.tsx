@@ -1,5 +1,9 @@
+import { memo, useCallback } from "react";
+
 import { useDispatch } from "react-redux";
 import { changeFilters } from "../../redux/slices/filtersSlice";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 import ShowMoreButton from "../../ui/ShowMoreButton/ShowMoreButton";
 import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon";
@@ -12,8 +16,6 @@ import {
   IFilters,
   IResponseFromFilmsApi,
 } from "../../interfaces";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
 
 interface Props {
   filters: IFilters;
@@ -22,12 +24,12 @@ interface Props {
   isFetching: boolean;
 }
 
-const Films = ({ filters, films, error, isFetching }: Props) => {
+const Films = memo(({ filters, films, error, isFetching }: Props) => {
   const dispatch = useDispatch();
 
-  const handleShowMoreClick = () => {
+  const handleShowMoreClick = useCallback(() => {
     dispatch(changeFilters(["page", (Number(filters.page) + 1).toString()]));
-  };
+  }, [filters.page, dispatch]);
 
   if (error) {
     console.error(error);
@@ -66,6 +68,6 @@ const Films = ({ filters, films, error, isFetching }: Props) => {
       {isFetching && films?.docs.length ? <LoadingIcon m="30px 0 0 0" /> : null}
     </Box>
   );
-};
+});
 
 export default Films;
