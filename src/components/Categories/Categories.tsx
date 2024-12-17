@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -24,28 +24,28 @@ const Categories = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newCat: string
-  ) => {
-    setThrottle(true);
-    setCategory(newCat);
+  const handleChange = useCallback(
+    () => (_event: React.MouseEvent<HTMLElement>, newCat: string) => {
+      setThrottle(true);
+      setCategory(newCat);
 
-    if (Number(filters.page) > 1) {
-      dispatch(changeFilters(["page", "1"]));
-    }
-
-    if (newCat === "СЕРИАЛЫ") {
-      dispatch(changeFilters(["type", "tv-series"]));
-    } else if (newCat) {
-      if (filters.type) {
-        dispatch(changeFilters(["type", undefined]));
+      if (Number(filters.page) > 1) {
+        dispatch(changeFilters(["page", "1"]));
       }
-      dispatch(changeFilters(["genres.name", newCat.toLowerCase()]));
-    } else {
-      dispatch(changeFilters(["genres.name", undefined]));
-    }
-  };
+
+      if (newCat === "СЕРИАЛЫ") {
+        dispatch(changeFilters(["type", "tv-series"]));
+      } else if (newCat) {
+        if (filters.type) {
+          dispatch(changeFilters(["type", undefined]));
+        }
+        dispatch(changeFilters(["genres.name", newCat.toLowerCase()]));
+      } else {
+        dispatch(changeFilters(["genres.name", undefined]));
+      }
+    },
+    [dispatch, filters.page, filters.type]
+  );
 
   return (
     <ToggleButtonGroup

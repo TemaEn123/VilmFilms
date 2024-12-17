@@ -6,7 +6,7 @@ export const useDebounce = (search: string) => {
   useEffect(() => {
     const handle = setTimeout(() => {
       setDebouncedSearch(search);
-    }, 700);
+    }, 500);
 
     return () => clearTimeout(handle);
   }, [search]);

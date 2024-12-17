@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Box, Link as MUILink, Typography } from "@mui/material";
 
 import { IFilmInCatalog, IPopularFilm } from "../../interfaces";
@@ -7,7 +9,7 @@ interface Props {
   popular: boolean;
 }
 
-const FilmCard = ({ film, popular }: Props) => {
+const FilmCard = memo(({ film, popular }: Props) => {
   return (
     <Box
       sx={{
@@ -86,6 +88,6 @@ const FilmCard = ({ film, popular }: Props) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FilmCard;

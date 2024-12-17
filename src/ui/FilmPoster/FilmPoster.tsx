@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Box } from "@mui/material";
 
 interface Props {
@@ -6,7 +8,7 @@ interface Props {
   rating: { kp: number; imdb: number };
 }
 
-const FilmPoster = ({ url, alt, rating }: Props) => {
+const FilmPoster = memo(({ url, alt, rating }: Props) => {
   return (
     <Box
       sx={{
@@ -32,6 +34,6 @@ const FilmPoster = ({ url, alt, rating }: Props) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FilmPoster;

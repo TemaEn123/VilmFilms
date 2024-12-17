@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Box } from "@mui/material";
 import FilmPoster from "../../ui/FilmPoster/FilmPoster";
 import FilmDetails from "../FilmDetails/FilmDetails";
@@ -8,7 +10,7 @@ interface Props {
   film: IFilmById;
 }
 
-const FilmInfo = ({ film }: Props) => {
+const FilmInfo = memo(({ film }: Props) => {
   return (
     <Box
       component="section"
@@ -30,6 +32,6 @@ const FilmInfo = ({ film }: Props) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FilmInfo;

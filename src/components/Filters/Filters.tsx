@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilters } from "../../redux/slices/filtersSlice";
 import { RootState } from "../../redux/store";
+
 import useThrottle from "../../helpers/hooks/useThrottle";
 
 import FilterItem from "../../ui/FilterItem/FilterItem";
@@ -22,7 +23,7 @@ const Filters = () => {
 
   useThrottle(() => setThrottle(false), 700);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setThrottle(true);
     if (filters.sortField !== undefined) {
       if (Number(filters.page) > 1) {
@@ -31,7 +32,7 @@ const Filters = () => {
       dispatch(changeFilters(!sortType));
     }
     setSortType((prev) => !prev);
-  };
+  }, [dispatch, filters.sortField, filters.page, sortType]);
 
   return (
     <Box

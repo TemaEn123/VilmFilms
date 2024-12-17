@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
 
+import { memo } from "react";
+
 interface Props {
   count: number;
   popular: boolean;
 }
 
-const FilmCardSkeleton = ({ count, popular }: Props) => {
+const FilmCardSkeleton = memo(({ count, popular }: Props) => {
   return (
     <>
       {[...Array(count)].map((_, i) => (
@@ -28,6 +30,6 @@ const FilmCardSkeleton = ({ count, popular }: Props) => {
       ))}
     </>
   );
-};
+});
 
 export default FilmCardSkeleton;

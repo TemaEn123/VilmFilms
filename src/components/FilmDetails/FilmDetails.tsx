@@ -1,4 +1,7 @@
+import { memo } from "react";
+
 import { Link } from "react-router";
+
 import { Box, Typography, Link as MUILink } from "@mui/material";
 import FilmDetailsLinks from "../../ui/FilmDetailsLinks/FilmDetailsLinks";
 
@@ -8,7 +11,7 @@ interface Props {
   film: IFilmById;
 }
 
-const FilmDetails = ({ film }: Props) => {
+const FilmDetails = memo(({ film }: Props) => {
   return (
     <Box sx={{ marginLeft: { xs: "0px", lg: "10px" }, flex: "1 1 auto" }}>
       <Box sx={{ backgroundColor: "#222" }} className="filmDetailsItem">
@@ -32,7 +35,7 @@ const FilmDetails = ({ film }: Props) => {
           <MUILink
             sx={{ color: "#fff", fontSize: { xs: "14px", sm: "16px" } }}
             component={Link}
-            to="."
+            to={`/search?year=${film.year}`}
           >
             {film.year}
           </MUILink>
@@ -47,7 +50,10 @@ const FilmDetails = ({ film }: Props) => {
             lineHeight: "150%",
           }}
         >
-          <FilmDetailsLinks items={film.countries.slice(0, 3)} />
+          <FilmDetailsLinks
+            items={film.countries.slice(0, 3)}
+            filter="countries.name"
+          />
         </Box>
       </Box>
       <Box className="filmDetailsItem">
@@ -59,7 +65,10 @@ const FilmDetails = ({ film }: Props) => {
             lineHeight: "150%",
           }}
         >
-          <FilmDetailsLinks items={film.genres.slice(0, 3)} />
+          <FilmDetailsLinks
+            items={film.genres.slice(0, 3)}
+            filter="genres.name"
+          />
         </Box>
       </Box>
       <Box sx={{ backgroundColor: "#222" }} className="filmDetailsItem">
@@ -77,7 +86,10 @@ const FilmDetails = ({ film }: Props) => {
             lineHeight: "150%",
           }}
         >
-          <FilmDetailsLinks items={film.persons.slice(0, 5)} />
+          <FilmDetailsLinks
+            items={film.persons.slice(0, 5)}
+            filter="persons.id"
+          />
         </Box>
       </Box>
       <Box
@@ -102,6 +114,6 @@ const FilmDetails = ({ film }: Props) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default FilmDetails;

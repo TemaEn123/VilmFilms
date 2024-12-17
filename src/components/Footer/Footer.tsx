@@ -1,6 +1,10 @@
+import { useMemo } from "react";
+
 import { Box } from "@mui/material";
 
 const Footer = () => {
+  const year = useMemo(() => new Date().getFullYear(), []);
+
   return (
     <Box
       sx={{
@@ -11,7 +15,7 @@ const Footer = () => {
       }}
       component="footer"
     >
-      Vilm © {new Date().getFullYear()}
+      Vilm © {year}
     </Box>
   );
 };

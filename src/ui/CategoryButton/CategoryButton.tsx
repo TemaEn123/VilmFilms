@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { ToggleButton } from "@mui/material";
 
 interface Props {
@@ -5,7 +7,7 @@ interface Props {
   throttle: boolean;
 }
 
-const CategoryButton = ({ text, throttle }: Props) => {
+const CategoryButton = memo(({ text, throttle }: Props) => {
   return (
     <ToggleButton
       disabled={throttle}
@@ -28,6 +30,6 @@ const CategoryButton = ({ text, throttle }: Props) => {
       {text}
     </ToggleButton>
   );
-};
+});
 
 export default CategoryButton;

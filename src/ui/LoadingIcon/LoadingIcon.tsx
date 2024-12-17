@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Box, SvgIcon } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
@@ -5,14 +7,14 @@ interface Props {
   m: string;
 }
 
-const LoadingIcon = ({ m }: Props) => {
+const LoadingIcon = memo(({ m }: Props) => {
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         width: "100%",
-        marginTop: m,
+        margin: m,
       }}
     >
       <SvgIcon className="loading" sx={{ fontSize: "30px" }}>
@@ -20,6 +22,6 @@ const LoadingIcon = ({ m }: Props) => {
       </SvgIcon>
     </Box>
   );
-};
+});
 
 export default LoadingIcon;

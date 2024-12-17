@@ -1,11 +1,15 @@
-import { Box, Link as MUILink, Typography } from "@mui/material";
+import { memo } from "react";
+
 import { Link } from "react-router";
 
+import { Box, Link as MUILink, Typography } from "@mui/material";
+
 interface Props {
-  items: { name: string }[];
+  items: { name: string; id?: number }[];
+  filter: string;
 }
 
-const FilmDetailsLinks = ({ items }: Props) => {
+const FilmDetailsLinks = memo(({ items, filter }: Props) => {
   return (
     <>
       {items.map((item, i) => {
@@ -19,7 +23,9 @@ const FilmDetailsLinks = ({ items }: Props) => {
                   whiteSpace: "nowrap",
                 }}
                 component={Link}
-                to="."
+                to={`/search?${filter}=${
+                  filter === "persons.id" ? item!.id : item.name
+                }`}
               >
                 {item.name}
               </MUILink>
@@ -44,7 +50,9 @@ const FilmDetailsLinks = ({ items }: Props) => {
                   whiteSpace: "nowrap",
                 }}
                 component={Link}
-                to="."
+                to={`/search?${filter}=${
+                  filter === "persons.id" ? item!.id : item.name
+                }`}
               >
                 {item.name}
               </MUILink>
@@ -54,6 +62,6 @@ const FilmDetailsLinks = ({ items }: Props) => {
       })}
     </>
   );
-};
+});
 
 export default FilmDetailsLinks;

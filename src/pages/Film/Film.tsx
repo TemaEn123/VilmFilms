@@ -20,7 +20,7 @@ const Film = () => {
   } = useGetFilmByIdQuery(params.filmId as string);
 
   if (error) {
-    return <>404</>;
+    throw new Error("404");
   }
 
   return (
@@ -42,10 +42,10 @@ const Film = () => {
           <Popular />
           <FilmInfo film={film!} />
           <Videoplayer />
-          {film?.similarMovies && (
+          {!!film?.similarMovies?.length && (
             <Slider name="Похожие фильмы: " films={film!.similarMovies} />
           )}
-          {film?.sequelsAndPrequels && (
+          {!!film?.sequelsAndPrequels?.length && (
             <Slider
               name="Сиквелы и приквелы: "
               films={film!.sequelsAndPrequels}
