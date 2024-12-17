@@ -14,6 +14,7 @@ export const filmsApi = createApi({
   reducerPath: "filmsApi",
   keepUnusedDataFor: 100000,
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  mode: "no-cors",
   endpoints: (builder) => ({
     getFilms: builder.query<IResponseFromFilmsApi, IFilters>({
       query: (filters) => ({
