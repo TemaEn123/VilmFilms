@@ -25,7 +25,7 @@ const Categories = () => {
   const dispatch = useDispatch();
 
   const handleChange = useCallback(
-    () => (_event: React.MouseEvent<HTMLElement>, newCat: string) => {
+    (_event: React.MouseEvent<HTMLElement>, newCat: string) => {
       setThrottle(true);
       setCategory(newCat);
 
