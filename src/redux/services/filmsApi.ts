@@ -1,11 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import {
-  IActor,
-  IFilmById,
-  IFilters,
-  IResponseFromFilmsApi,
-} from "../../interfaces";
+import { IFilmById, IFilters, IResponseFromFilmsApi } from "../../interfaces";
 
 const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -21,7 +16,6 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
-          mode: "no-cors",
         },
         params: {
           ...filters,
@@ -55,7 +49,6 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
-          mode: "no-cors",
         },
       }),
     }),
@@ -65,7 +58,6 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
-          mode: "no-cors",
         },
       }),
     }),
@@ -75,7 +67,6 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
-          mode: "no-cors",
         },
       }),
       serializeQueryArgs: ({ endpointName }) => {
@@ -109,7 +100,6 @@ export const filmsApi = createApi({
         headers: {
           accept: "application/json",
           "X-API-KEY": API_KEY,
-          mode: "no-cors",
         },
       }),
       serializeQueryArgs: ({ endpointName }) => {
@@ -134,16 +124,6 @@ export const filmsApi = createApi({
         return currentArg !== previousArg;
       },
     }),
-    getActor: builder.query<IActor, string>({
-      query: (id) => ({
-        url: `https://api.kinopoisk.dev/v1.4/person/${id}`,
-        headers: {
-          accept: "application/json",
-          "X-API-KEY": API_KEY,
-          mode: "no-cors",
-        },
-      }),
-    }),
   }),
 });
 
@@ -153,5 +133,4 @@ export const {
   useGetFilmByIdQuery,
   useGetFilmsBySearchQuery,
   useGetFilmsByLinkClickQuery,
-  useGetActorQuery,
 } = filmsApi;
